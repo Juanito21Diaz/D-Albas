@@ -1,0 +1,80 @@
+{% extends "index.html" %}
+
+{% block encabezado %}
+{% include "administrador/encabezado.html" %}
+{% endblock %}
+
+{% block contenido %}
+<div class="container">
+    <h1 class="titleInicial heading">
+        Nuestros <span> productos</span>
+      </h1>
+</div>
+<div id="tableClientes" class="w-100 table-responsive card container pt-3 pb-3" style="margin: 0 auto;">
+    <table class="table table-bordered table-stripped mt-5 mb-5" id="tblProductos">
+        <thead >
+            <tr class="text-dark text-center">
+                <th class="text-center">Producto</th>
+                <th class="text-center">Imagen</th>
+                <th class="text-center">Precio</th>
+                <th class="text-center">Categoria</th>
+                <th class="text-center">Tematica</th>
+                <th class="text-center">Sabor</th>
+                <th class="text-center">Peso</th>
+                <th class="text-center">Editar</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for producto in listaProductos %}
+                <tr>
+                    <td class="text-center" style="font-size: 15px;">{{producto.nombreProducto}}</td>
+                    <td class="text-center">
+                        <img class="rounded" id="imgProducto" src="/media/{{producto.imagenProducto}}" alt="imagen del producto" width="50" height="50">
+                    </td>
+                    <td class="text-center precio" style="font-size: 15px;">$ {{producto.precioProducto}}</td>
+                    <td class="text-center" style="font-size: 15px;">{{producto.categoriaProducto}}</td>
+                    <td class="text-center" style="font-size: 15px;">{{producto.tematicaProducto}}</td>
+                    <td class="text-center" style="font-size: 15px;">{{producto.saborProducto}}</td>
+                    <td class="text-center" style="font-size: 15px;">{{producto.unidadMedidaProducto}}</td>
+                    <td class="text-center" style="font-size: 15px;">
+                        <a href="/consultarProducto/{{producto.id}}"><i class="fa fa-edit text-warning editarProducto"></i></a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+<br><br><br><br><br>
+<div>
+    {% if messages %}
+        {% for mensaje in messages %}
+            <script>
+                Swal.fire({
+                    title: "Actualizar Producto",
+                    text: "{{ mensaje }}",
+                    icon: "{{ mensaje.tags }}"
+                });
+            </script>
+        {% endfor %}
+    {% endif %}
+</div>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var precios = document.querySelectorAll('.precio');
+        precios.forEach(function (precio) {
+            var precioSinFormato = precio.textContent.split('$ ')[1];
+            var precioFormateado = parseFloat(precioSinFormato).toLocaleString('es-CO', {
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 2 
+            }); 
+
+            precio.textContent = '$ ' + precioFormateado;
+        });
+    });
+
+</script>
+{% endblock %}
+
+{% block footer %}
+{% include "administrador/footer.html" %}
+{% endblock %}

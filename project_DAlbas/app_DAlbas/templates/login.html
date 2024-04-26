@@ -1,0 +1,122 @@
+{% extends "index.html" %}
+
+{% block encabezado %}
+    {% include "encabezado.html" %}
+{% endblock %}
+
+{% block contenido %}
+<br><br><br>
+<div class="container" style="width: 70vw;"> 
+    <div class="login row">
+        <div class="col-lg-10 col-xl-11 mx-auto">
+            <div class="card flex-row my-5 border-0 shadow rounded-3 overflow-hidden">
+                <div class="card-img-left d-none d-md-flex" style="width: 40%;">
+                    {% load static %}
+                    <img src="{% static 'images/login.jpg' %}" class="img-thumbnail"
+                        alt="Login">
+                </div>
+                <div class="card-body p-4 p-sm-5">
+                    <h1 class="card-title text-center mb-4 fw-light fw-bold text-uppercase">iniciar sesión</h1>
+                    <hr>
+                    <form action="/login/" method="post" id="frmLogin" class="mt-4" autocomplete="off">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+
+                        <div class="row mx-1">
+                            <div class="col-10 col-md-6 col-lg-12 mx-auto mb-3">
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="txtUsername" name="txtUsername"
+                                        placeholder="Username" autocomplete="off" required>
+                                    <label for="txtUsername">Correo</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mx-1">
+                            <div class="col-10 col-md-6 col-lg-12 mx-auto">
+                                <div class="input-group">
+                                    <div class="form-floating mb-3">
+                                        <input type="password" class="form-control" id="txtPassword" name="txtPassword"
+                                            placeholder="Password" autocomplete="new-password" required>
+                                        <label for="txtPassword">Contraseña</label>
+                                    </div>
+                                    <div class="input-group-text mb-3">
+                                        <input class="form-check-input mt-0" type="checkbox" id="verPassword"
+                                            aria-label="Checkbox for following text input">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr>
+
+                        <div class="row d-grid mx-1 mb-3 mt-3">
+                            <div class="col-10 col-md-6 col-lg-12 mx-auto">
+                                <button id="botonIngresar"
+                                class="registrar col-12 btn btn-lg btn-light btn-login fw-bold text-uppercase"
+                                type="submit">Ingresar
+                                <i class="fa fa-arrow-right"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <p class="mensaje d-block text-center mt-4 mb-4 small" style="font-size: 1.3rem;"><a href="/setPassword_view/">¿Olvidó
+                                su contraseña?</a><br>¿No tienes una cuenta? <a href="/vistaRegistrarCliente/"> Registrate</a>
+                        </p>
+
+
+                        <div class="g-recaptcha d-flex justify-content-center align-items-center h-100"
+                            data-sitekey="6Le9EfolAAAAAH8NUHlSRdT7V9p2kih39aNoP4l9"></div>
+
+                        <hr class="my-4">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="text-center">
+    {% if messages %}
+        {% for m in messages %}
+            <script>
+                Swal.fire({
+                    title: "Recuperar contraseña",
+                    text: "{{ m }}",
+                    icon: "{{ m.tags }}"
+                });
+            </script>
+        {% endfor %}
+    {% endif %}
+</div>
+<div class="text-center">
+    {% if mensaje %}
+        <script>
+            Swal.fire("LOGIN", '{{mensaje}}', "warning")
+        </script>
+    {% endif %}
+</div>
+<script>
+    const passwordInput = document.querySelector('#txtPassword');
+    const showPasswordCheckbox = document.querySelector('#verPassword');
+
+    showPasswordCheckbox.addEventListener('change', () => {
+        if (showPasswordCheckbox.checked) {
+            passwordInput.type = 'text';
+        } else {
+            passwordInput.type = 'password';
+        }
+    });
+
+    document.addEventListener("DOMContentLoaded", function() {
+        var fields = document.querySelectorAll("input[autocomplete=off]");
+        for (var i = 0; i < fields.length; i++) {
+          fields[i].setAttribute("autocomplete", "new-password");
+        }
+      });
+</script>
+<br><br><br>
+{% endblock %}
+
+{% block footer %}
+    {% include "footer.html" %}
+{% endblock %}

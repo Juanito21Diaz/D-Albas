@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <link rel="stylesheet" href="{% static '../static/css/otp.css' %}">
+    <link rel="shortcut icon" href="{% static '../static/images/icon.png' %}" type="image/x-icon">
+    <title>Soy administrador</title>
+</head>
+<body>
+    <div class="container">
+        <header></header>
+        <h4>¿Eres un usuario administrador?</h4>
+        <p>Ingresar el código para verificar que eres un administrador y poder registrarte en el sistema.</p>
+        <form  method="post" action="/verificarAdministrador/">
+        {% csrf_token %}
+          <div class="input-field">
+            <input type="number" id="num1" name="num1" />
+            <input type="number" id="num2" name="num2" disabled />
+            <input type="number" id="num3" name="num3" disabled />
+            <input type="number" id="num4" name="num4" disabled />
+          </div>
+          <button type="submit">Verificar</button>
+        </form>
+        <!-- <p>Didn't receive the code <br> <a href="#">Resend code</a></p> -->
+      </div>
+      <script>
+        const inputs = document.querySelectorAll("input"),
+        button = document.querySelector("button");
+
+        inputs.forEach((input, index1) => {
+        input.addEventListener("keyup", (e) => {
+            const currentInput = input,
+            nextInput = input.nextElementSibling,
+            prevInput = input.previousElementSibling;
+            if (currentInput.value.length > 1) {
+            currentInput.value = "";
+            return;
+            }
+            if (
+            nextInput &&
+            nextInput.hasAttribute("disabled") &&
+            currentInput.value !== ""
+            ) {
+            nextInput.removeAttribute("disabled");
+            nextInput.focus();
+            }
+            if (e.key === "Backspace") {
+            inputs.forEach((input, index2) => {
+                if (index1 <= index2 && prevInput) {
+                input.setAttribute("disabled", true);
+                input.value = "";
+                prevInput.focus();
+                }
+            });
+            }
+            if (!inputs[3].disabled && inputs[3].value !== "") {
+            button.classList.add("active");
+            return;
+            }
+            button.classList.remove("active");
+        });
+        });
+
+        window.addEventListener("load", () => inputs[0].focus());
+
+      </script>
+</body>
+</html>

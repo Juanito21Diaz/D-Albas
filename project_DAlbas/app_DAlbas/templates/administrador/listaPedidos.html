@@ -1,0 +1,102 @@
+{% extends "index.html" %}
+
+{% block encabezado %}
+{% include "administrador/encabezado.html" %}
+{% endblock %}
+
+{% block contenido %}
+{% load static %}
+<script src="{% static 'js/estado_pedidos.js' %}"></script>
+<div class="container">
+    <h1 class="titleInicial heading">
+        Lista de <span> pedidos</span>
+      </h1>
+</div>
+<div id="tableClientes" class="w-100 table-responsive card container pt-3 pb-3" style="margin: 0 auto">
+    <table class="table table-bordered table-stripped mt-5 mb-5" id="tblPedidosAdmin">
+        <thead >
+            <tr class="text-dark text-center">
+                <th class="text-center">Cliente</th>
+                <th class="text-center">Teléfono</th>
+                <th class="text-center">Fecha</th>
+                <th class="text-center">Pago</th>
+                <th class="text-center">Valor</th>
+                <th class="text-center">Estado</th>
+                <th class="text-center">Acción</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for pedido in listaPedidos %}
+                <tr data-pedido-id="{{ pedido.id }}">
+                    <td class="text-center" style="font-size: 15px;">{{pedido.nombreClientePedido}}</td>
+                    <td class="text-center" style="font-size: 15px;">{{pedido.telefonoClientePedido}}</td>
+                    <td class="text-center" style="font-size: 15px;">{{pedido.fechaHoraPedido}}</td>
+                    <td style="font-size: 15px;">{{pedido.metodoPago}}</td>
+                    <td class="precio" style="font-size: 15px;"><span class="valor-pedido">{{ pedido.valorPedido }}</span></td>
+                    <td>
+                        <select class="form-select cbEstado" name="cbEstado" style="font-size: 15px;">
+                            {% for estado in estados %}
+                            <option value="{{ estado.0 }}" {% if estado.0 == pedido.estadoPedido %}selected{% endif %}>{{ estado.0 }}</option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                    <td class="text-center my-auto">
+                        <button class="btn text-white btnActualizarEstado" style="background-color: #fc77a7;">
+                            Actualizar
+                        </button>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+<br><br><br><br><br>
+
+<script>
+    $(document).ready(function() {
+        $(".valor-pedido").each(function() {
+            var valorSinFormato = parseFloat($(this).text());
+            var valorFormateado = valorSinFormato.toLocaleString('es-CO', { style: 'currency', currency: 'COP' });
+            valorFormateado = valorFormateado.replace(/,00$/, '');
+    
+            $(this).text(valorFormateado);
+        });
+
+        $(".btnActualizarEstado").click(function() {
+            var fila = $(this).closest("tr");
+            var pedidoId = fila.data("pedido-id");
+            var nuevoEstado = fila.find(".cbEstado").val();
+            
+            $.ajax({
+                type: "POST",
+                url: "/actualizar_estado_pedido/",
+                data: {
+                    pedido_id: pedidoId,
+                    nuevo_estado: nuevoEstado
+                },
+                success: function(response) {
+                    if (response.success) {
+                        Swal.fire({
+                            title: 'Estado actualizado',
+                            text: response.message, 
+                            icon: 'success'
+                        })
+                    } else {
+                        Swal.fire({
+                            title: 'Error',
+                            text: 'Hubo un error al actualizar el estado del pedido: ' + response.error,
+                            icon: 'error'
+                        });
+                    }
+                }
+            });
+        });
+    });
+        
+</script>
+
+{% endblock %}
+
+{% block footer %}
+{% include "administrador/footer.html" %}
+{% endblock %}

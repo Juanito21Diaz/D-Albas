@@ -1,0 +1,157 @@
+{% extends "index.html" %}
+
+{% block encabezado %}
+{% include "administrador/encabezado.html" %}
+{% endblock %}
+
+{% block contenido %}
+<br><br>
+<div class="container frmUser">
+    <div class="login row">
+        <div class="col-lg-10 col-xl-11 mx-auto">
+            <div class="card flex-row my-5 border-0 shadow rounded-3 overflow-hidden">
+                <div class="card-body p-4 p-sm-5">
+                    <h1 class="card-title text-center mb-3 fw-light fw-bold text-uppercase">registrar usuario</h1>
+                    <hr>
+                    <form action="/registrarUsuario/" method="post" id="frmRegistrarUsuario" autocomplete="off" class="mt-4"
+                        enctype="multipart/form-data" novalidate>
+                        {% csrf_token %}
+                        <div class="row mx-1">
+                            <div class="col-10 col-md-6 col-lg-6 mx-auto mb-3">
+                                <label for="txtNombres" class="form-label label-user">Nombres:</label>
+                                <input type="text" class="form-control" id="txtNombres" name="txtNombres" value=""
+                                    required>
+                            </div>
+                            <div class="col-10 col-md-6 col-lg-6 mx-auto mb-3">
+                                <label for="txtApellidos" class="form-label label-user">Apellidos:</label>
+                                <input type="text" class="form-control" id="txtApellidos" name="txtApellidos" value=""
+                                    required>
+                            </div>
+                        </div>
+                        <div class="row mx-1">
+                            <div class="col-10 col-md-6 col-lg-6 mx-auto mb-3">
+                                <label for="txtIdentificacion" class="form-label label-user">Identificación:</label>
+                                <input type="number" class="form-control" id="txtIdentificacion"
+                                    name="txtIdentificacion" value="" required>
+                            </div>
+                            <div class="col-10 col-md-6 col-lg-6 mx-auto mb-3">
+                                <label for="txtTelefono" class="form-label label-user">Teléfono:</label>
+                                <input type="tel" class="form-control" id="txtTelefono" name="txtTelefono" value=""
+                                    required>
+                            </div>
+                        </div>
+                        <div class="row mx-1">
+                            <div class="col-10 col-md-6 col-lg-6 mx-auto mb-3">
+                                <label for="txtCorreo" class="form-label label-user">E-mail:</label>
+                                <input type="email" class="form-control" id="txtCorreo" name="txtCorreo" value=""
+                                    required>
+                            </div>
+                            <div class="col-10 col-md-6 col-lg-6 mx-auto mb-3">
+                                <label for="txtCorreoConfirmado" class="form-label label-user">E-mail:</label>
+                                <input type="email" class="form-control" id="txtCorreoConfirmado" name="txtCorreoConfirmado" value=""
+                                    placeholder="Confirmar correo" required>
+                            </div>
+                        </div>
+                        <div class="row mx-1">
+                            <div class="col-10 col-md-6 col-lg-6 mx-auto mb-3">
+                                <label for="txtPassword" class="form-label label-user">Contraseña:</label>
+                                <input type="text" class="form-control" id="txtPassword" name="txtPassword" value=""
+                                    required>
+                            </div>
+                            <div class="col-10 col-md-6 col-lg-6 mx-auto mb-3">
+                                <label for="txtPasswordConfirmada" class="form-label label-user">Contraseña:</label>
+                                <input type="text" class="form-control" id="txtPasswordConfirmada" name="txtPasswordConfirmada" value=""
+                                    placeholder="Confirmar contraseña" required>
+                            </div>
+                        </div>
+                        <div class="row mx-1">
+                            <div class="col-10 col-md-6 col-lg-6 mx-auto mb-3">
+                                <div class="container-input text-center">
+                                    <input type="file" id="fileFoto" name="fileFoto" accept=".jpg"
+                                        class="inputfile inputfile-1"
+                                        data-multiple-caption="{count} archivos seleccionados" multiple />
+                                    <label for="fileFoto">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="iborrainputfile" width="20"
+                                            height="17" viewBox="0 0 20 17">
+                                            <path
+                                                d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z">
+                                            </path>
+                                        </svg>
+                                        <span class="iborrainputfile">Foto de perfil</span>
+                                    </label>
+                                </div>
+                                <div class="text-center mt-3">
+                                    <img class="rounded img-fluid" id="imagenUsuario" src="" alt="">
+                                </div>
+                            </div>
+                            <div class="col-10 col-md-6 col-lg-6 mt-4 mx-auto d-flex align-items-end justify-content-end">
+                                <div class="btn-group" role="group">
+                                    <button class="btn btn-outline-success btn-lg fw-bold" style="letter-spacing: 2px;">
+                                        <i class="fa fa-check"></i>
+                                    </button>
+                                    <a href="/vistaLogin/" class="btn btn-outline-danger btn-lg fw-bold" style="letter-spacing: 2px;">
+                                        <i class="fa fa-close"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <div>
+                        {% if mensaje %}
+                            {% if estado %}
+                                <script>
+                                    Swal.fire("Registro Usuario", '{{mensaje}}', "success")
+                                </script>
+                            {% else %}
+                                <script>
+                                    Swal.fire("Registro Usuario", '{{mensaje}}', "warning")
+                                </script>
+                            {% endif %}
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="card-img-left d-none d-md-flex" style="width: 40%;">
+                    {% load static %}
+                    <img src="{% static 'images/frmRegistrarUsuario.jpg' %}" class="img-thumbnail"
+                        alt="registrarCliente">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br><br>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const form = document.getElementById('frmRegistrarUsuario');
+        form.addEventListener('submit', function (event) {
+            const correo = document.getElementById('txtCorreo').value;
+            const correoConfirmado = document.getElementById('txtCorreoConfirmado').value;
+            const password = document.getElementById('txtPassword').value;
+            const passwordConfirmada = document.getElementById('txtPasswordConfirmada').value;
+            
+            if (correo !== correoConfirmado) {
+                event.preventDefault();
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Los correos no coinciden. Por favor, verifique.',
+                  })
+            }
+            
+            if (password !== passwordConfirmada) {
+                event.preventDefault();
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Las contraseñas no coinciden. Por favor, verifique.',
+                  })
+            }
+        });
+    });
+</script>
+{% endblock %}
+
+{% block footer %}
+{% include "administrador/footer.html" %}
+{% endblock %}

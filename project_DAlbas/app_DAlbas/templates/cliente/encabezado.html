@@ -1,0 +1,22 @@
+{% load static %}
+<a href="/inicioCliente/" class="logo">
+  <img src="{%static '../static/images/Logo.svg' %}" alt="" style="width: 70%; padding: 8%"/>
+</a>
+
+<nav class="navbar" id="menu" style="display: flex; justify-content: center; align-self: center;">
+  <a href="/inicioCliente/">Inicio</a>
+  <a href="/nosotrosCliente/">Acerca de</a>
+  <a href="/vistaProductosCliente/">Productos</a>
+  
+</nav>
+
+<!-- iconos -->
+
+<div class="icons">
+  <a href="/vistaCarrito/" class="boton-carrito">
+    <i class="fas fa-shopping-cart"></i>
+    <span class="numerito">{{ cantidad_productos_carrito }}</span>
+  </a>
+  <!-- <a href="/vistaCarrito/" id="numerito" class="fas fa-shopping-cart boton-carrito numerito">{{ cantidad_productos }}</a> -->
+  <div class="fas fa-user" id="cart-btn"><a href="/vistaPerfilUsuario/"> Mi perfil</a></div>
+</div>

@@ -1,0 +1,264 @@
+{% extends "index.html" %}
+
+{% block encabezado %}
+{% include "administrador/encabezado.html" %}
+{% endblock %}
+
+{% block contenido %}
+{% load static %}
+<!-- <script src="{% static '../static/js/pedido_admin.js' %}"></script> -->
+<script src="{% static 'js/pedido_admin.js' %}"></script>
+{% for producto in productos %}
+    <script> cargarProductos("{{producto.id}}","{{producto.nombreProducto}}","{{producto.precioProducto}}");</script>
+{% endfor %}
+<br>
+    
+    <div class="principal" style="width: 100%;">                   
+        <div id="datosGenerales" class="m-5 card rounded mx-auto" style="width: 70vw;">
+            <div class="mt-5 mb-4 text-center">
+                <h3 class="fw-bold">REGISTRAR PEDIDO</h3>
+            </div>
+            <hr>
+            <form action="" id="frmRegistrarPedido" autocomplete="off">
+            <div class="form-group row m-4">
+                <div class="mb-3 col-lg-6">
+                    <label for="txtNombreCliente" class="form-label mx-1">Nombre del cliente:</label>
+                    <input type="text" name="txtNombreCliente" id="txtNombreCliente" class="form-control" required> 
+                </div>                                                          
+                <div class="mb-3 col-lg-6">
+                    <label for="txtTelefonoCliente" class="form-label mx-1">Telefono del cliente:</label>
+                    <input type="number" name="txtTelefonoCliente" id="txtTelefonoCliente" class="form-control" required> 
+                </div>                                                          
+                <div class="mb-3 col-lg-6">
+                    <label for="txtFechaHoraPedido" class="form-label mx-1">Fecha del pedido:</label>
+                    <input type="datetime-local" name="txtFechaHoraPedido" id="txtFechaHoraPedido" class="form-control" min="{{ today|date:'Y-m-d' }}T00:00" step="3600" required>
+                </div>                
+                <div class="mb-3 col-lg-6">                                    
+                    <label for="cbMetodoPago" class="form-label mx-1">Método de pago:</label>
+                    <select name="cbMetodoPago" id="cbMetodoPago" class="form-select" required>
+                        <option value="">Seleccione...</option>
+                        {% for metodo in METODOS_DE_PAGO %}
+                            <option value="{{metodo.0}}">{{metodo.0}}</option>
+                        {% endfor %}
+                    </select>           
+                </div>  
+                <div class="mb-3 col-lg-6">
+                    <label for="txtCorreoCliente" class="form-label mx-1">Correo del cliente:</label>
+                    <input type="email" name="txtCorreoCliente" id="txtCorreoCliente" class="form-control" required>
+                </div>     
+                <div class="mb-3 col-lg-6 pt-1 mt-1">                        
+                    <button type="button" id="btnAbrirModalAnexarMaterial" class="btn btn-secondary mt-4" data-bs-toggle="modal" data-bs-target="#modalProductos">
+                        Agregar productos
+                    </button>   
+                    <button type="button" id="btnAbrirModalAnexarMaterial" class="btn btn-success mt-4" data-bs-toggle="modal" data-bs-target="#modalPagos">
+                        Agregar pago
+                    </button>   
+                </div>                                                 
+            </div>   
+            
+        </div>
+        </form>
+        <br>
+        <div id="vistaTablaPedidos" class="w-75 table-responsive card container" style="margin: 0 auto">
+            <table class="table table-bordered table-stripped mt-3" id="tblProductosPedidos">
+                <thead >
+                    <tr>
+                        <th colspan="7" class="text-center">DETALLE PEDIDO</th>
+                    </tr>
+                    <tr class="text-dark text-center">
+                        <th>Producto</th>
+                        <th>Precio Unitario</th>
+                        <th>Precio Acumulado</th>
+                        <th>Cantidad</th>
+                    </tr>
+                </thead>
+                <tbody id="datosTablaPedidos">
+                    
+                </tbody>
+            </table>
+            <br>
+            <p class="mt-3 h3 mx-2" id="totalAPagar">Total: $0.00</p>
+            <br>
+        </div>
+
+        <div class="text-center mt-5">
+            <button class="btn btn-primary fw-bold" id="btnRegistrarPedido" style="margin: 0 auto; font-size: 15px;">FINALIZAR PEDIDO</button> 
+            <a href="/inicioAdministrador/" type="button" class="btn btn-danger fw-bold mx-2" style="font-size: 15px;">CANCELAR</a>
+        </div>                      
+        <br><br>
+        <!-- The Modal -->
+        <div class="modal" id="modalProductos">
+            <div class="modal-dialog modal-md">
+            <div class="modal-content">
+        
+                <!-- Modal Header -->
+                <div class="modal-header tituloModal" style="background-color: #F285AD;">
+                    <h4 class="modal-title text-white">DETALLE PEDIDO</h4>
+                    <button type="button" class="btn-close text-white" data-bs-dismiss="modal"></button>
+                </div>
+        
+                <!-- Modal body -->
+                <div class="modal-body mx-3">
+                    <form id="frmDetalleSolicitud" action="" class="m-3 was-validated">
+                        <div class="form-group row">                                                          
+                            <div class="col-lg-12 mb-3">                                    
+                                <label for="cbProducto" class="form-label mx-1">Productos disponibles:</label>
+                                <select name="cbProducto" id="cbProducto" class="form-select" required>
+                                    <option value="" selected disabled>Seleccione...</option>
+                                    {% for producto in productos %}
+                                        <option value="{{producto.id}}" data-precio="{{producto.precioProducto}}">{{producto.nombreProducto}} - $ {{producto.precioProducto}}</option>
+                                    {% endfor %}
+                                    
+                                </select>               
+                            </div>              
+                        </div>  
+                        <div class="form-group row">
+                            <div class="col-lg-12 mb-3">
+                                <label for="txtCantidadProducto" class="form-label">Cantidad:</label>
+                                <input type="number" name="txtCantidadProducto" id="txtCantidadProducto" class="form-control" required>      
+                            </div>            
+                        </div>                                       
+                        <div class="form-group row" hidden>
+                            <div class="col-lg-12 mb-3">
+                                <label for="txtPrecioProducto" class="form-label">Precio unitario del producto:</label>
+                                <input type="number" name="txtPrecioProducto" id="txtPrecioProducto" class="form-control" disabled>  
+                            </div>
+                        </div>
+                    </form>
+                </div>
+        
+                <!-- Modal footer -->
+                <div class="modal-footer m-3">
+                    <button class="btn text-white" id="btnAgregarDetallePedido" data-bs-dismiss="modal" style="background-color: rgb(89, 181, 72);">Agregar producto</button>
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+        
+            </div>
+            </div>
+        </div>   
+        
+        <div class="modal fade modalPedidos" id="modalPagos" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modalPagosLabel" aria-hidden="true">>
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <!-- Modal Header -->
+                    <div class="modal-header tituloModal" style="background-color: #F285AD;">
+                        <h4 class="modal-title text-white">DETALLE PEDIDO</h4>
+                        <button type="button" class="btn-close text-white" data-bs-dismiss="modal"></button>
+                    </div>
+                    
+        
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <form id="frmDetalleSolicitudAbono" action="" class="m-3">
+
+                            <div class="row">
+                                <div class="col-8 col-sm-6">
+                                    <div class="form-group">
+                                        <label for="txtCantidadProducto">Cantidad de abono:</label>
+                                        <input type="number" name="txtCantidadProducto" id="txtCantidadProducto" class="form-control" value="1" required>
+                                    </div>
+                                    <div class="form-group">                                    
+                                        <label for="cbMetodoAbono" class="form-label mx-1">Método de pago:</label>
+                                        <select name="cbMetodoAbono" id="cbMetodoAbono" class="form-select" required>
+                                            <option value="">Seleccione...</option>
+                                            <option value="1">BANCOLOMBIA</option>
+                                            <option value="2">DAVIPLATA</option>
+                                            <option value="3">NEQUI</option>
+                                        </select>           
+                                    </div>    
+                                </div>
+                                <div class="col-4 col-sm-6">
+                                    <div class="col-10 col-md-6 col-lg-6 mx-auto mb-3 text-center">
+                                        <label for="txtCantidadProducto">Por favor, agregue aquí su comprobante:</label>
+                                        <div class="container-input">
+                                            <input type="file" id="fileFoto" name="fileFoto" accept=".jpg"
+                                                class="inputfile inputfile-1"
+                                                data-multiple-caption="{count} archivos seleccionados" multiple />
+                                            <label for="fileFoto">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="iborrainputfile" width="20"
+                                                    height="17" viewBox="0 0 20 17">
+                                                    <path
+                                                        d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z">
+                                                    </path>
+                                                </svg>
+                                                <span class="iborrainputfile">Subir imagen</span>
+                                            </label>
+                                        </div>
+                                        <div class="mt-3">
+                                            <img class="rounded" id="imagenProducto" src="" alt="">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <h5>Métodos de pago:</h5>
+                                    <p>Recuerda seguir los siguientes pasos:</p>
+                                    <ol>
+                                        <li>Abre la app de tu entidad.</li>
+                                        <li>Escanea el código QR.</li>
+                                        <li>Verifica la información, acepta y listo.</li>
+                                    </ol>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-12 col-sm-6" id="bancolombiaInfo" style="display: none;">
+                                            <h3>BANCOLOMBIA:</h3>
+                                            <p>Nombre personalizado: Pasteleria D Albas</p>
+                                            <p>Producto destino: Ahorros *3051</p>
+                                            <img src="{% static '../static/images/PQRBANCOLOMBIA.jpeg' %}" class="img-thumbnail" alt="...">
+                                        </div>
+                                        <div class="col-12 col-sm-6" id="daviplataInfo" style="display: none;">
+                                            <h3>DAVIPLATA:</h3>
+                                            <p>Nombre personalizado: D'Albas</p>
+                                            <p>Número destino: 3123359326</p>
+                                            <img src="{% static '../static/images/daviplata.jpg' %}" class="img-thumbnail" alt="...">
+                                        </div>
+                                        <div class="col-12 col-sm-6" id="nequiInfo" style="display: none;">
+                                            <h3>NEQUI:</h3>
+                                            <p>Nombre personalizado: D'Albas</p>
+                                            <p>Número destino: 3123359326</p>
+                                            <img src="{% static '../static/images/PQRNEQUI.jpeg' %}" class="img-thumbnail" alt="...">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+        
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button class="btn text-white" id="btnAgregarDetalleAbono" data-bs-dismiss="modal" style="background-color: rgb(89, 181, 72);">Add Abono</button>
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>                     
+       
+    </div>
+<br>
+<script>
+    // Obtén el elemento select y el elemento donde mostrar el precio
+    const selectProducto = document.getElementById('cbProducto');
+    const precioSeleccionado = document.getElementById('txtPrecioProducto');
+
+    // Agrega un event listener para detectar cambios en la selección
+    selectProducto.addEventListener('change', function() {
+        // Obtén la opción seleccionada
+        const selectedOption = selectProducto.options[selectProducto.selectedIndex];
+
+        // Obtén el precio de la opción seleccionada
+        const precioProducto = selectedOption.getAttribute('data-precio');
+
+        // Establece el precio en el campo de texto
+        precioSeleccionado.value = precioProducto;
+    });
+    
+</script>
+
+
+{% endblock %}
+
+{% block footer %}
+{% include "administrador/footer.html" %}
+{% endblock %}

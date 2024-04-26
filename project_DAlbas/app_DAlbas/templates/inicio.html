@@ -1,0 +1,355 @@
+{% extends "index.html" %}
+{% block encabezado %}
+{% include "encabezado.html" %}
+{% endblock %}
+{% block contenido %}
+{% load static %}
+<div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
+  <div class="carousel-indicators">
+    <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="" aria-label="Slide 1"></button>
+    <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2" class="active" aria-current="true"></button>
+    <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2" aria-label="Slide 3" class=""></button>
+  </div>
+  <div class="carousel-inner">
+    <div class="carousel-item">
+      <div class="carousel-image bg-img-1 active">
+        <!-- <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#777"></rect></svg> -->
+
+        <div class="container">
+          <div class="carousel-caption text-start">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="carousel-item active">
+      <div class="carousel-image bg-img-2">
+        <!-- <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#777"></rect></svg>  -->
+
+        <div class="container">
+          <div class="carousel-caption">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="carousel-item">
+      <div class="carousel-image bg-img-3">
+        <!-- <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#777"></rect></svg> -->
+        <div class="container">
+          <div class="carousel-caption text-end">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+
+<section class="section" style="margin-top: -17px;">
+  <h1 class="heading mb-4"><span> Galería <i class="fa fa-image" style="font-size: 25px;"></i></span></h1>
+  <br><br>
+  <div class="grid">
+    <div class="item item--medium">
+      <div class="item__details">
+        Cupcakes Mexicanos
+      </div>
+    </div>
+    <div class="item item--medium">
+      <div class="item__details">
+        Torta de tiras 
+      </div>
+    </div>
+    <div class="item item--medium">
+      <div class="item__details">
+        Torta de abejas
+      </div>
+    </div>
+    <div class="item item--medium">
+      <div class="item__details">
+        Galletas vaca lola
+      </div>
+    </div>
+    <div class="item item--medium">
+      <div class="item__details">
+        Galletas granja de zenón
+      </div>
+    </div>
+    <div class="item item--medium">
+      <div class="item__details">
+        Torta de Grado
+      </div>
+    </div>
+    <div class="item item--medium">
+      <div class="item__details">
+        Torta Bob esponja
+      </div>
+    </div>
+    <div class="item item--medium">
+      <div class="item__details">
+        Cupcakes cumpleaños
+      </div>
+    </div>
+    <div class="item item--medium">
+      <div class="item__details">
+        Cupcakes de Naruto 
+      </div>
+    </div>
+    <div class="item item--medium">
+      <div class="item__details">
+        Galletas de Barbie
+      </div>
+    </div>
+    <div class="item item--medium">
+      <div class="item__details">
+        Galletas animales de la selva
+      </div>
+    </div>
+    <div class="item item--medium">
+      <div class="item__details">
+        Torta chorreada con flores
+      </div>
+    </div>
+    <div class="item item--medium">
+      <div class="item__details">
+        Cupcakes de Sirena
+      </div>
+    </div>
+    <div class="item item--medium">
+      <div class="item__details">
+        Torta primera comunión
+      </div>
+    </div>
+    <div class="item item--medium">
+      <div class="item__details">
+        Galletas de mickey mouse
+      </div>
+    </div>
+    <div class="item item--medium">
+      <div class="item__details">
+        Cupcakes de cumpleaños
+      </div>
+    </div>
+    <div class="item item--medium">
+      <div class="item__details">
+        Torta de Jorge el curioso
+      </div>
+    </div>
+    <div class="item item--medium">
+      <div class="item__details">
+        Torta de Sonic
+      </div>
+    </div>
+  </div>
+</div>
+
+<h1 class="titleInicial heading" style="padding-top: -6px;">
+  ¿Dónde <span> encontrarnos? <i class="fa fa-map" style="font-size: 25px;"></i></span>
+</h1>
+
+<section class="maps">
+    <div class="col-4 col-md-8 col-lg-8 col-xs-8">
+        <iframe class="mapa"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d922.2809298313122!2d-75.28993330637033!3d2.965854298647837!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e3b75a8c0ada021%3A0xeaaea5c754c4a614!2sCl.%2071%20%233%20a%2040%2C%20Neiva%2C%20Huila!5e0!3m2!1ses!2sco!4v1684361720359!5m2!1ses!2sco"
+            width="100%" height="450px" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+            width="100%" height="450px" style="border:0;" allowfullscreen="" loading="lazy">
+        </iframe>
+    </div>
+</section>
+
+<section class="nosotros mb-5" id="nosotros" style="margin-top: -25px;">
+  <div class="d-flex justify-content-center">
+    <a href="/mostrarComentarios/" class="display-3" title="Ver todos los comentarios">
+      <h1 class="heading mb-4"><span class="underline-hover "> Calificaciones <i class="fa fa-comments" style="font-size: 25px;"></i></span></h1>
+    </a>
+  </div>
+  <div id="comentariosCarousel" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
+      {% if comentarios %}
+        {% for comentario in comentarios %}
+        <div class="carousel-item {% if forloop.first %}active{% endif %}">
+          <div class="contenedores">
+            <div class="cards card mb-3 mx-3" style="max-width: 80%; height: 290px;">
+              <div class="row g-0">
+                <div class="card-body m-3 mx-auto comentario d-flex flex-column px-3">
+                  <div class="mb-2">
+                    <img src="{{ comentario.usuarioComentario.fotoUsuario.url }}" alt="Foto de usuario" width="90" height="90"
+                    class="rounded-circle border border-dark">
+                  </div>
+                  <div class="star-rating ">
+                    {% for star in "*****" %}
+                      {% if forloop.counter <= comentario.puntajeComentario %}
+                        <span class="bi bi-star-fill fs-2 text-warning"></span>
+                      {% else %}
+                        <span class="bi bi-star fs-2"></span>
+                      {% endif %} 
+                    {% endfor %}
+                  </div>
+                  <h5 class="card-title fs-2 m-4">
+                    {% if comentario.contenidoComentario|length > 55 %}
+                    "{{ comentario.contenidoComentario|slice:":55" }}..."
+                    {% else %}
+                    "{{ comentario.contenidoComentario }}"
+                    {% endif %}
+                  </h5>
+                  <p class="card-text">-{{ comentario.usuarioComentario.first_name }} {{ comentario.usuarioComentario.last_name }}</p>
+                  <div class="mensaje fs-4">
+                    <a href="#" class="ver-mas">Ver más...</a>
+                    <a href="#" class="ver-menos" style="display: none;">Ver menos...</a>
+                  </div>
+                  <span>{{ comentario.fechaHoraCreacion }}</span>
+                  <div class="comentario-completo" style="display: none;">
+                    "{{ comentario.contenidoComentario }}"
+                  </div>
+                  <div class="flex-grow-1"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      {% else %}
+        <p style="font-size: 2vh;">No hay comentarios disponibles en este momento.</p>
+      {% endif %}
+    </div>
+    <a class="carousel-control-prev" href="#comentariosCarousel" role="button" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#comentariosCarousel" role="button" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </a>
+  </div>
+    <!-- <div class="contenedores">
+      {% if comentarios %}
+        {% for comentario in comentarios %}
+        <div class="cards card mb-3 mx-3" style="max-width: 450px;">
+          <div class="row g-0">
+            <div class="card-body m-3 mx-auto comentario d-flex flex-column">
+              <div class="star-rating mb-4">
+                {% for star in "*****" %}
+                    {% if forloop.counter <= comentario.puntajeComentario %}
+                        <span class="bi bi-star-fill fs-2 text-warning"></span>
+                    {% else %}
+                        <span class="bi bi-star fs-2"></span>
+                    {% endif %}
+                {% endfor %}
+              </div>
+              <h5 class="card-title fs-2 m-4">
+                {% if comentario.contenidoComentario|length > 55 %}
+                "{{ comentario.contenidoComentario|slice:":55" }}..."
+                {% else %}
+                "{{ comentario.contenidoComentario }}"
+                {% endif %}
+              </h5>
+              <p class="card-text">-{{ comentario.usuarioComentario.first_name }} {{ comentario.usuarioComentario.last_name}}</p>
+              <div class="mensaje fs-4">
+                <a href="#" class="ver-mas">Ver más...</a>
+                <a href="#" class="ver-menos" style="display: none;">Ver menos...</a>
+              </div>
+              <span>{{ comentario.fechaHoraCreacion }}</span>
+              <div class="comentario-completo" style="display: none;">
+                "{{ comentario.contenidoComentario }}"
+              </div>
+              <div class="flex-grow-1"></div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      {% else %}
+        <p style="font-size: 2vh;">No hay comentarios disponibles en este momento.</p>
+      {% endif %}
+    </div> -->
+    
+  </section>
+  
+  <script>
+  // Obtén todos los elementos con la clase "comentario"
+  const comentarios = document.querySelectorAll('.comentario');
+  
+  // Recorre todos los comentarios y agrega eventos de escucha
+  comentarios.forEach(function(comentario) {
+    const verMas = comentario.querySelector('.ver-mas');
+    const verMenos = comentario.querySelector('.ver-menos');
+    const h5 = comentario.querySelector('h5');
+    const comentarioCompleto = comentario.querySelector('.comentario-completo');
+    const contenidoOriginal = h5.textContent; // Guarda el contenido original
+  
+    verMas.addEventListener('click', function(e) {
+      e.preventDefault();
+      h5.textContent = comentarioCompleto.textContent;
+      verMas.style.display = 'none'; // Oculta "Ver más"
+      verMenos.style.display = 'block'; // Muestra "Ver menos"
+    });
+  
+    verMenos.addEventListener('click', function(e) {
+      e.preventDefault();
+      h5.textContent = contenidoOriginal; // Restaura el contenido original
+      verMas.style.display = 'block'; // Muestra "Ver más"
+      verMenos.style.display = 'none'; // Oculta "Ver menos"
+    });
+  });
+  
+  
+  </script>
+  
+  <style>
+  /* Estilo para el mensaje "Ver más" */
+  .mensaje {
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0.3s, opacity 0.3s ease-in-out;
+  }
+  
+  .comentario:hover .mensaje {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  /* animacion del titulo de los comentarios */
+
+  /* Estilo predeterminado para el enlace */
+  .underline-hover {
+    text-decoration: none;
+    color: #333;
+    position: relative;
+    display: inline-block;
+    overflow: hidden; /* Oculta el contenido que se desborda */
+  }
+
+  /* Pseudo-elemento ::before para la línea */
+  .underline-hover::before {
+    content: '';
+    position: absolute;
+    height: 4px; /* Grosor de la línea */
+    width: 0; /* Inicialmente sin ancho */
+    left: 50%; /* Inicia en el centro horizontalmente */
+    transform: translateX(-50%); /* Centra el elemento en relación con su ancho */
+    bottom: 0; /* Posición en la parte inferior */
+    background-color: #ffffff; /* Color de la línea */
+    transition: width 0.3s ease-in-out; /* Transición suave para el ancho */
+    z-index: 2; /* Prioridad superior para la línea */
+  }
+
+  /* Estilo para el texto dentro del enlace */
+  .underline-hover h1 {
+    position: relative;
+    z-index: 1; /* Prioridad inferior para el texto */
+  }
+
+  /* Anima la línea al hacer hover */
+  .underline-hover:hover::before {
+    width: 100%; /* Ancho del 100% al hacer hover */
+  }
+  </style>
+  
+{% endblock %}
+{% block footer %}
+{% include "footer.html" %}
+{% endblock %}

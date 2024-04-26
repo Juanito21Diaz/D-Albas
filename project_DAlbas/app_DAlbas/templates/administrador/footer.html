@@ -1,0 +1,51 @@
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-9 text-center">
+      <h2>Módulo Administrativo</h3>
+      <div class="copyright">
+        <hr>
+        <p class="mb-0">
+          <small>&copy; Derechos reservador Wolsoft | SENA.</small>
+        </p>
+      </div> 
+    </div>
+    <div class="clock mt-4 text-center">
+      <p id="date" class="h4"></p>
+      <p id="time" class="h3"></p>
+    </div>
+  </div>
+</div>
+<div class="text-center">
+  {% if mensaje %}
+      <script>
+          Swal.fire("Error!", '{{mensaje}}', "info")
+      </script>
+  {% endif %}
+</div>
+<script>
+  const WEEK = ["Domingo","Lunes","Martes","Miercoles","Jueves","Viernes","Sabado"];
+
+  function updateTime() {
+    var now = new Date();
+    var hours = now.getHours();
+    var ampm = hours >= 12 ? 'PM' : 'AM';
+
+    hours = hours % 12;
+    hours = hours ? hours : 12;
+
+    //document.getElementById("time").innerText = zeroPadding(now.getHours(), 2) + ":" + zeroPadding(now.getMinutes(), 2) + ":" + zeroPadding(now.getSeconds(), 2);
+    
+    //document.getElementById("date").innerText = now.getFullYear() + "-" + zeroPadding(now.getMonth() + 1, 2) + "-" + zeroPadding(now.getDate(), 2) + " " + WEEK[now.getDay()];
+  
+    document.getElementById("time").innerText = zeroPadding(hours, 2) + ":" + zeroPadding(now.getMinutes(), 2) + ":" + zeroPadding(now.getSeconds(), 2) + " " + ampm;
+    
+    document.getElementById("date").innerText = now.getFullYear() + "-" + zeroPadding(now.getMonth() + 1, 2) + "-" + zeroPadding(now.getDate(), 2) + " " + WEEK[now.getDay()];
+  }
+
+  updateTime();
+  setInterval(updateTime, 1000);
+
+  function zeroPadding(num, digit) {
+    return String(num).padStart(digit, '0');
+  }
+</script>

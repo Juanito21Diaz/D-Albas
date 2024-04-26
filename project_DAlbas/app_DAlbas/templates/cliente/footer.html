@@ -1,0 +1,159 @@
+<a href="https://wa.me/+573178860724" class="botonWhatsapp boton-hidden" title="Envianos un mensaje" target="_blank">
+    <i class="icon-whatsapp"></i>
+</a>
+<a href="#" id="abrirFormulario" class="botonComentar boton-hidden" title="Danos tu opinión">
+    <i class="fa fa-comments"></i>
+</a>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-9 text-center">
+            <div class="footer-site-logo mb-4">
+                <a href="#" style="cursor: text;">D'Albas</a>
+            </div>
+            <div class="social mb-4">
+                <h3>Mantente en contacto</h3>
+                <ul class="list-unstyled">
+                    <li class="fb">
+                        <a href="https://www.facebook.com/dalbaspasteleria"><span class="icon-facebook"
+                                style="font-size: large;"></span></a>
+                    </li>
+                    <li class="tw">
+                        <a href="https://wa.me/+573178860724" style="font-size: large;"><span
+                                class="icon-whatsapp"></span></a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="copyright">
+                <hr>
+                <p class="mb-0">
+                    <small>&copy; Derechos reservador Wolsoft | SENA.</small>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Ventana emergente -->
+<div class="modal" id="formularioModal" tabindex="-1" aria-labelledby="formularioModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method="post" action="/crearComentario/" onsubmit="return validarComentario()">
+                {% csrf_token %}
+                <div class="modal-header" style="background-color: #fc77a7;">
+                    <h3 class="modal-title text-white" id="formularioModalLabel">Danos tu opinión</h3>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body mx-2 mb-2">
+                    <br>
+                    <div>
+                        <div class="form-floating mb-3">
+                            <textarea class="form-control px-2" id="comentario" name="contenidoComentario" style="height: 100px"
+                            oninput="limitarCaracteres()" placeholder="Cuentanos tu experiencia..."></textarea>
+                            <label for="recipient-name" class="col-form-label">Cuentanos tu experiencia...</label>
+                        </div>
+                        <!-- <textarea class="form-control px-2" id="comentario" name="contenidoComentario" rows="6"
+                            oninput="limitarCaracteres()"></textarea> -->
+                        <input type="hidden" id="puntuacionEstrellas" name="puntuacionEstrellas" value="0" />
+                        <div class="star-rating ms-3" style="cursor: pointer;">
+                            <span class="bi bi-star  fs-2" data-star="1"></span>
+                            <span class="bi bi-star  fs-2" data-star="2"></span>
+                            <span class="bi bi-star  fs-2" data-star="3"></span>
+                            <span class="bi bi-star  fs-2" data-star="4"></span>
+                            <span class="bi bi-star  fs-2" data-star="5"></span>
+                        </div>
+                        
+
+                    </div>
+                    <div class="d-flex justify-content-end">
+                        <button type="submit" class="btn btn-lg fw-bold text-white"
+                            style="background-color: #fc77a7;">Enviar comentario</button>
+                    </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var formularioModal = new bootstrap.Modal(document.getElementById('formularioModal'));
+        var abrirFormulario = document.getElementById('abrirFormulario');
+
+        abrirFormulario.addEventListener('click', function (event) {
+            event.preventDefault();
+            formularioModal.show();
+        });
+    });
+
+    function validarComentario() {
+        var comentario = document.getElementById('comentario').value;
+
+        if (comentario.length <= 10) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops!',
+                text: "El comentario debe tener más de 10 caracteres"
+            });
+            return false;
+        }
+
+        if (selectedStars === 0) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Danos una Calificación',
+                text: 'Es necesario seleccionar una calificación antes de enviar el comentario.'
+            });
+            return false;
+        }
+
+        return true;
+    }
+
+    // Código de las estrellas
+    const stars = document.querySelectorAll('.star-rating span[data-star]');
+    let selectedStars = 0;
+
+    stars.forEach(star => {
+        star.addEventListener('click', function () {
+            const starValue = this.getAttribute('data-star');
+            selectedStars = starValue;
+
+            stars.forEach(otherStar => {
+                const otherStarValue = otherStar.getAttribute('data-star');
+                if (otherStarValue <= starValue) {
+                    otherStar.classList.remove('bi-star');
+                    otherStar.classList.add('bi-star-fill');
+                } else {
+                    otherStar.classList.remove('bi-star-fill');
+                    otherStar.classList.add('bi-star');
+                }
+            });
+        });
+    });
+
+
+
+    //ESTE SCRIPT AYUDA EN LA PUNTUACION DE ESTRELLAS
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const stars = document.querySelectorAll(".star-rating span[data-star]");
+
+        stars.forEach(function (star) {
+            star.addEventListener("click", function () {
+                const selectedStar = parseInt(star.getAttribute("data-star"));
+                document.getElementById("puntuacionEstrellas").value = selectedStar;
+
+                // Cambiar el color de las estrellas seleccionadas (opcional)
+                stars.forEach(function (s) {
+                    const sStar = parseInt(s.getAttribute("data-star"));
+                    if (sStar <= selectedStar) {
+                        s.classList.add("text-warning");
+                    } else {
+                        s.classList.remove("text-warning");
+                    }
+                });
+            });
+        });
+    });
+
+
+</script>

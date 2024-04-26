@@ -1,0 +1,96 @@
+{% extends "index.html" %}
+
+{% block encabezado %}
+{% include "cliente/encabezado.html" %}
+{% endblock %}
+
+{% block contenido %}
+<section class="products" id="products" href="/productos/">
+    <h1 class="heading" name="pastillaje"><span>Tortas en pastillaje</span></h1>
+    <div class="row">
+        <div class="col-12 col-md-8 order-sm-2">
+            <div id="primary" class="content-area">
+                <main id="main" class="site-main" role="main">
+                    <div class="col product-slider row">
+                        {% for producto in listaProductos %}
+                        <div class="col-sm-5 h-30 box m-3">
+                            <img src="../media/{{producto.imagenProducto}}" class=" card-img-top" alt="...">
+                            <div class="card-body">
+                                <h3 class="card-title">{{producto.nombreProducto}}</h3>
+                                <div class="price">{{producto.descripcionProducto}}</div>
+                                <div class="price">{{producto.producto.categorias}}</div>
+                                <div class="stars">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center pix-pb-202">
+                                <div class="flex-fill">
+                                    <div class="pix-product-price">
+                                        <span class="price font-weight-bold mb-0">
+                                            <span class="woocommerce-Price-amount amount">
+                                                <bdi class="precio">
+
+                                                    {{producto.precioProducto}}
+                                                </bdi>
+                                            </span>
+                                        </span>
+                                    </div>
+                                    <div class="pix-product-rating"></div>
+                                </div>
+                                <div class="btn pix-pl-10 align-self-stretch d-flex">
+                                    <button type="button" class="pix-add-to-wishlist" id="btnGuardar" onclick="mandarId('{{producto.id}}')">
+                                        <div class="fas fa-shopping-cart" id="login-btn"></div>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </main>
+            </div>
+        </div>
+
+        <div class="sidebar col-6 col-md-4 order-sm-1" style="position: relative; z-index:10;">
+            <div class="w-100 h-100 d-flex align-items-start" style="z-index:10;">
+                <aside id="secondary"
+                    class="widget-area sticky-bottom pix-sticky-sidebar pix-boxed-widgets w-100 pix-pb-30 pix-sidebar-adjust">
+                    <section id="woocommerce_product_categories-1" class="widget woocommerce widget_product_categories">
+                        <h3 class="font-weight-bold text-heading-default widget-title2 pix-mb-10">Categorías</h3>
+                        <ul class="product-categories list-unstyled">
+                            <li class="cat-item cat-item-88 cat-parent">
+                                <a href="">Temáticas</a>
+                                <span class="count">7</span>
+                                <ul class="children">
+                                    <li class="cat-item cat-item-253"><a href="">Cumpleaños</a> <span class="count">6</span></li>
+                                    <li class="cat-item cat-item-253"><a href="">Bautizos</a> <span class="count">6</span></li>
+                                    <li class="cat-item cat-item-253"><a href="">Primera Comunión</a> <span class="count">6</span></li>
+                                    <li class="cat-item cat-item-253"><a href="">Grados</a> <span class="count">6</span></li>
+                                    <li class="cat-item cat-item-253"><a href="">Matrimonios</a> <span class="count">6</span></li>
+                                    <li class="cat-item cat-item-253"><a href="">Aniversarios</a> <span class="count">6</span></li>
+                                    <li class="cat-item cat-item-253"><a href="">Quinces</a> <span class="count">6</span></li>
+                                </ul>
+                            </li>
+                            <li class="cat-item cat-item-89 current-cat cat-parent"><a href="">Categoría</a><span class="count">4</span>
+                                <ul class="children">
+                                    <li class="cat-item cat-item-109"><a href="">Torts en Crema</a> <span class="count">6</span></li>
+                                    <li class="cat-item cat-item-95"><a href="">Tortas en fondan</a> <span class="count">34</span></li>
+                                    <li class="cat-item cat-item-96"><a href="">Cupcakes</a> <span  class="count">8</span></li>
+                                    <li class="cat-item cat-item-93"><a href="">Galletas</a> <span class="count">1</span></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </section>
+                </aside>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block footer %}
+{% include "cliente/footer.html" %}
+{% endblock %}

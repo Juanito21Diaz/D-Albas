@@ -1,0 +1,26 @@
+{% load static %}
+<a href="/inicio/" class="logo">
+  <img src="{%static '../static/images/Logo.svg' %}" alt="" style="width: 70%; padding: 8%"/>
+</a>
+
+<nav class="navbar" id="menu" style="display: flex; justify-content: center; align-self: center;">
+  <a href="/inicio/">Inicio</a>
+  <a href="/vistaInicioNosotros/">Acerca de</a>
+  <a href="/vistaInicioProductos/">Productos</a>
+  <a href="/vistaManual/">Manuales</a>
+</nav>
+
+<!-- iconos -->
+
+<div class="icons">
+  <!-- <div class="fas fa-bars" id="menu-btn"></div>
+  <div class="fas fa-search" id="search-btn"></div> -->
+  <div class="fas fa-user" id="cart-btn"><a href="/vistaLogin/"> Mi cuenta</a></div>
+</div>
+
+<!-- El formulario de busqueda -->
+
+<form action="" class="search-form">
+  <input type="search" id="search-box" placeholder="buscar aquí...">
+  <label for="search-box" class="fas fa-search"></label>
+</form>

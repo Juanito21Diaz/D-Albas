@@ -1,0 +1,221 @@
+{% extends "index.html" %}
+{% block encabezado %}
+{% include "administrador/encabezado.html" %}
+{% endblock %}
+
+{% block contenido %}
+{% load static %}
+{% load static %}
+<!-- <script src="{% static '../static/js/graficas.js' %}"></script> -->
+<script src="{% static 'js/graficas.js' %}"></script>
+<div class="container-fluid perfilUser p-5">
+    <div class="row p-4">
+        <div class="col-3 p-3">
+            <div class="card p-3 text-center">
+                <div class="text-center">
+                    <img src="../media/{{ user.fotoUsuario }}" class="rounded mx-auto d-block img-fluid" alt="..." id="imagenUsuario" style="border-radius: 50%;">
+                </div>
+
+                <div class="col-10 mx-auto mb-3">
+                    <hr class="mb-4">
+                    
+                    <h4 style="color: var(--black);">{{ administrador.first_name }} {{ administrador.last_name }}</h4>
+                    
+                </div>
+            </div>
+            <div class="card p-3 text-center mt-4">
+                <nav class="p-3 menu-user">
+                    <div class="col-10 mx-auto mt-3 mb-5 nav-item">
+                        <a href="javascript:void(0);" class="h5 nav-user" style="color: var(--black);" onclick="mostrarDatos();">Mi datos</a>
+                    </div>
+                    <hr>
+                    <div class="col-10 mx-auto mt-5 mb-5 nav-item">
+                        <a href="javascript:void(0);" class="h5 nav-user" style="color: var(--black);" onclick="mostrarPedidos()">Estadísticas</a> 
+                    </div>
+                    <hr>
+                    <div class="col-10 mx-auto mt-5 mb-3 nav-item">
+                        <a href="/cerrarSesion/" id="cerrarSesion" class="h5 nav-user" style="color: var(--black);">Cerrar sesión</a>
+                    </div>
+                </nav>
+            </div>
+        </div>
+        <div class="col-9 p-3">
+            <div class="card text-center py-5 px-5" style="height: auto;">
+                <div class="card-body py-5" id="vistaInicial" style="height: auto;">
+                    <div class="d-flex flex-column justify-content-center align-items-center" style="height: 59vh;">
+                        <h3 class="card-title text-center fw-bold">Bienvenido: {{ user.first_name }} {{ user.last_name }}</h3>
+                        <br>
+                        <div style="width: 100%; height: auto;">
+                            <p class="card-text">
+                                ¡Gracias por visitar nuestro módulo administrador! Aquí puedes gestionar productos, usuarios y pedidos.
+                            </p>
+                        </div>
+                        <br>
+                    </div>
+                </div>
+                <div class="card-body py-5" id="misDatos" style="height: auto;" hidden>
+                    <button type="button" class="btn d-flex flex-column justify-content-star align-items-star rounded" onclick="mostrarVistaInicial()" style="margin-left: -25px; margin-top: -40px;">
+                        <i class="fa fa-arrow-left" style="font-size: 15px;"> Back</i>
+                    </button>
+                    <div class="container" style="height: 61vh;">
+                        <div class="container row" style="height: auto;">
+                            <div class="col-12 text-center">
+                                <img src="../media/{{ user.fotoUsuario }}" class="rounded mx-auto d-block" alt="..." id="fotoUser" style="border-radius: 50%;">
+                            </div>                        
+                            <div class="col-12">
+                                <div class="mt-5">
+                                    <p>Nombre: <span>{{ administrador.first_name }} {{ administrador.last_name }}</span></p>
+                                    <p>Correo: <span>{{ administrador.email }}</span></p>
+                                    <p>Cargo: <span>{{ administrador.cargoAdministrador }}</span></p>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="mt-5">
+                                    <p>Fecha de creación: <span>{{ administrador.date_joined }}</span></p>
+                                    <p>Último inicio de sesión: <span>{{ administrador.last_login }}</span></p>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="mt-5">
+                                    <a href="/consultarAdministrador/{{user.id}}/" class="btn btn-success text-white" role="button">Editar datos</a>
+                                    <button type="button" class="btn btn-primary text-white" data-bs-toggle="modal" data-bs-target="#changePassword" data-bs-whatever="@getbootstrap">Cambiar contraseña</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal fade" id="changePassword" tabindex="-1" aria-labelledby="changePasswordLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                          <div class="modal-content">
+                            <div class="modal-header" style="background-color: #fc77a7;">
+                              <h3 class="modal-title text-white fw-bold" id="changePasswordLabel">Cambiar contraseña</h3>
+                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                              <form class="mx-2" action="/change_password_admin/" method="post" id="frmChangePassword" autocomplete="off" enctype="multipart/form-data" novalidate>
+                                {% csrf_token %}
+                                <div class="mt-3 form-floating">
+                                    <input type="text" class="form-control" id="txtCurrentPassword" name="txtCurrentPassword" placeholder="Contraseña actual:" autocomplete="off">
+                                    <label for="txtCurrentPassword" class="col-form-label">Contraseña actual:</label>
+                                </div>
+                                <br>
+                                <hr>
+                                <br>
+                                <div class="mb-3 form-floating">
+                                    <input type="text" class="form-control" id="txtNewPassword" name="txtNewPassword" placeholder="Nueva contraseña:" autocomplete="off">
+                                    <label for="txtNewPassword" class="col-form-label">Nueva contraseña:</label>
+                                </div>
+                                <div class="mb-3 form-floating">
+                                    <input type="text" class="form-control" id="txtConfirmPassword" name="txtConfirmPassword" placeholder="Confirmar contraseña:" autocomplete="off">
+                                    <label for="txtConfirmPassword" class="col-form-label">Confirmar contraseña:</label>
+                                </div>
+                                <br>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-lg btn-danger text-white fw-bold" data-bs-dismiss="modal">Cancelar</button>
+                                    <button type="submit" class="btn btn-lg text-white fw-bold" style="background-color: #fc77a7;">Cambiar contraseña</button>
+                                </div>
+                              </form>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                </div>
+                <div class="card-body py-5" id="misPedidos" style="max-height: auto; overflow-y: auto;" hidden>
+                    <button type="button" class="btn d-flex flex-column justify-content-star align-items-star rounded" onclick="mostrarVistaInicial()" style="margin-left: -18px; margin-top: -28px;">
+                        <i class="fa fa-arrow-left" style="font-size: 15px;"> Back</i>
+                    </button>
+                    <div class="container" style="height: 61vh;">
+                        <div>
+                            <h3>Mis Estadísticas</h3>
+                            <hr>
+                            <div class="row mx-auto">
+                                <div class="col-12 mt-5 mb-5">
+                                    <h4>Cantidad de pedidos por estado</h4>
+                                    <img src="../media/grafica_pedidos.png" alt="" height="350vh" width="auto">
+                                </div>
+                                <hr>
+                                <div class="col-12 mt-5 mb-5">
+                                    <h4>Proporción de usuarios por roles</h4>
+                                    <img src="../media/grafica_usuarios.png" alt="" height="350vh" width="auto">
+                                </div>
+                                <hr>
+                                <div class="col-12 mt-5 mb-5">
+                                    <h4>Pedidos mensuales</h4>
+                                    <img src="../media/grafica_pedidos_mensuales.png" alt="" height="350vh" width="auto">
+                                </div>
+                                <hr>
+                                <div class="col-12 mt-5 mb-5">
+                                    <h4>Métodos de pago más utilizados</h4>
+                                    <img src="../media/grafica_metodos_pago.png" alt="" height="350vh" width="auto">
+                                </div>
+                                <hr>
+                                <div class="col-12 mt-5 mb-5">
+                                    <h4>Diferencia de calificaciones en comentarios</h4>
+                                    <img src="../media/grafica_calificaciones_comentarios.png" alt="" height="350vh" width="auto">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div>
+    {% if messages %}
+        {% for mensaje in messages %}
+            <script>
+                Swal.fire({
+                    title: "Administrador D'Albas",
+                    text: "{{ mensaje }}",
+                    icon: "{{ mensaje.tags }}"
+                });
+            </script>
+        {% endfor %}
+    {% endif %}
+</div>
+<script>
+    function mostrarDatos() {
+        var vistaInicial = document.getElementById("vistaInicial");
+        var misDatos = document.getElementById("misDatos");
+        var misPedidos = document.getElementById("misPedidos");
+        
+        vistaInicial.style.display = "none";
+        vistaInicial.hidden = true; 
+        misDatos.style.display = "block";
+        misDatos.hidden = false; 
+        misPedidos.style.display = "none";
+        misPedidos.hidden = true;
+    }
+
+    function mostrarPedidos() {
+        var vistaInicial = document.getElementById("vistaInicial");
+        var misDatos = document.getElementById("misDatos");
+        var misPedidos = document.getElementById("misPedidos");
+        
+        vistaInicial.style.display = "none";
+        vistaInicial.hidden = true; 
+        misDatos.style.display = "none";
+        misDatos.hidden = true;
+        misPedidos.style.display = "block";
+        misPedidos.hidden = false;
+    }
+
+    function mostrarVistaInicial() {
+        var vistaInicial = document.getElementById("vistaInicial");
+        var misDatos = document.getElementById("misDatos");
+        var misPedidos = document.getElementById("misPedidos");
+        
+        vistaInicial.style.display = "block";
+        vistaInicial.hidden = false; 
+        misDatos.style.display = "none";
+        misDatos.hidden = true;
+        misPedidos.style.display = "none";
+        misPedidos.hidden = true;
+    }
+
+</script>
+{% endblock %}
+
+{% block footer %}
+{% include "administrador/footer.html" %}
+{% endblock %}

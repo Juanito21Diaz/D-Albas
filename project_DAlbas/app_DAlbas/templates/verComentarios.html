@@ -1,0 +1,61 @@
+{% extends "index.html" %}
+{% block encabezado %}
+{% include "encabezado.html" %}
+{% endblock %}
+{% block contenido %}
+{% load static %}
+<br><br>
+<main class="container-lg pt-5 pb-5">
+    <div class="my-3 p-3 bg-body rounded shadow-sm">
+        <h6 class="border-bottom pb-4 text-center fw-bold mt-4 mb-0 display-6 ms-3">Comentarios</h6>
+        {% for comentario in page_obj %}
+        <div class="d-flex text-muted pt-3 ms-3 me-5 align-items-start">
+            {% if comentario.usuarioComentario %}
+            <div class="text-center me-3 align-self-center">
+                <img src="{{ comentario.usuarioComentario.fotoUsuario.url }}" alt="Foto de usuario" width="50" height="50"
+                    class="rounded-circle border border-dark">
+            </div>
+
+            <div class="pb-2 mb-0 small lh-lg border-bottom flex-grow-1">
+                <div class="d-flex justify-content-between">
+                    <strong class="text-gray-dark me-4 fs-5">{{ comentario.usuarioComentario.first_name }} {{ comentario.usuarioComentario.last_name }}</strong>
+                    <div class="star-rating">
+                        {% for star in "*****" %}
+                        {% if forloop.counter <= comentario.puntajeComentario %}
+                        <span class="bi bi-star-fill fs-5 text-warning"></span>
+                        {% else %}
+                        <span class="bi bi-star fs-5"></span>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <span class="d-block ms-2 " style="font-size: 12px;  padding-right: 10px;">{{ comentario.contenidoComentario }}</span>
+                <span class="d-block ms-2">{{ comentario.fechaHoraCreacion }}</span>
+            </div>
+            {% else %}
+            <p>No se encontró información de usuario para este comentario.</p>
+            {% endif %}
+        </div>
+        {% endfor %}
+        <div class="text-center mt-3">
+            {% if page_obj.has_previous %}
+            <a href="?page={{ page_obj.previous_page_number }}" class="btn btn-light me-2 fs-5">
+                <span class="bi bi-arrow-left"></span> Ver comentarios anteriores
+            </a>
+            {% endif %}
+            {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}" class="btn btn-light fs-5">
+                Ver más comentarios <span class="bi bi-arrow-right"></span>
+            </a>
+            {% endif %}
+        </div>
+        
+    </div>
+</main>
+<br><br>
+
+{% endblock %}
+{% block footer %}
+{% include "footer.html" %}
+{% endblock %}

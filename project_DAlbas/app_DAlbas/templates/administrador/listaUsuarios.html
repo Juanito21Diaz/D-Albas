@@ -1,0 +1,85 @@
+{% extends "index.html" %}
+
+{% block encabezado %}
+{% include "administrador/encabezado.html" %}
+{% endblock %}
+
+{% block contenido %}
+<div class="container">
+    <h1 class="titleInicial heading">
+        Nuestros <span> clientes</span>
+      </h1>
+</div>
+<div id="tableClientes" class="w-100 table-responsive card container pt-3 pb-3" style="margin: 0 auto">
+    <table class="table table-bordered table-stripped mt-5 mb-5" id="tblClientes">
+        <thead >
+            <tr class="text-dark text-center">
+                <th class="text-center">Identificación</th>
+                <th class="text-center">Foto</th>
+                <th class="text-center">Nombre</th>
+                <th class="text-center">Correo</th>
+                <th class="text-center">Telefono</th>
+                <th class="text-center">Último inicio de sesón</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for cliente in listaClientes %}
+                <tr>
+                    <td class="text-center" style="font-size: 15px;">{{cliente.identificacionCliente}}</td>
+                    <td>
+                        <img class="rounded" id="imagenCliente" src="/media/{{cliente.fotoUsuario}}" alt="" width="50" height="50">
+                    </td>
+                    <td style="font-size: 15px;">{{cliente.first_name}} {{cliente.last_name}}</td>
+                    <td style="font-size: 15px;">{{cliente.email}}</td>
+                    <td style="font-size: 15px;">{{cliente.telefonoCliente}}</td>
+                    <td class="text-center" style="font-size: 15px;">{{cliente.last_login}}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<div class="container">
+    <h1 class="titleInicial heading" >
+        Lista <span> administradores</span>
+      </h1>
+</div>
+<div id="tableClientes" class="w-100 table-responsive card container pt-3 pb-3" style="margin: 0 auto">
+    <table class="table table-bordered table-stripped mt-5 mb-5" id="tblAdmins">
+        <thead >
+            <tr class="text-dark text-center">
+                <th class="text-center">Nombre</th>
+                <th class="text-center">Foto</th>
+                <th class="text-center">correo</th>
+                <th class="text-center">Telefono</th>
+                <th class="text-center">Cargo</th>
+                <th class="text-center">Último inicio de sesón</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for admin in listaAdministradores %}
+                <tr>
+                    <td style="font-size: 15px;">{{admin.first_name}} {{admin.last_name}}</td>
+                    <td>
+                        <img class="rounded" id="imagenCliente" src="/media/{{admin.fotoUsuario}}" alt="" width="50" height="50">
+                    </td>
+                    <td style="font-size: 15px;">{{admin.email}}</td>
+                    <td class="text-center" style="font-size: 15px;">{{admin.telefonoAdministrador}}</td>
+                    <td style="font-size: 15px;">{{admin.cargoAdministrador}}</td>
+                    <td style="font-size: 15px;">{{admin.last_login}}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+<br><br><br>
+
+<script>
+    cargarDataTable($("#tblClientes"),"LISTA DE CLIENTES", 5)
+    cargarDataTable($("#tblAdmins"),"LISTA DE ADMINISTRADORES", 5)
+</script>
+{% endblock %}
+
+{% block footer %}
+{% include "administrador/footer.html" %}
+{% endblock %}

@@ -1,0 +1,141 @@
+{% extends "index.html" %}
+
+{% block encabezado %}
+{% include "cliente/encabezado.html" %}
+{% endblock %}
+
+{% block contenido %}
+<div class="container frmPedidos">
+    <div class="row">
+        <div class="col-lg-10 col-xl-11 mx-auto">
+            <div class="card flex-row my-5 border-0 shadow rounded-3 overflow-hidden">
+                <div class="card-body p-4 p-sm-5">
+                    <h1 class="card-title text-center mb-3 fw-light fw-bold text-uppercase">Registrar pedidos</h1>
+                    <hr>
+                    <form action="/registrarPedidos/" method="post" id="frmRegistrarPedidos" class="was-validated mt-4"
+                        enctype="multipart/form-data" novalidate>
+                        {% csrf_token %}
+                        <div class="row mx-1 mb-3">
+                            <div class="col-6">
+                                <label for="txtNombreCliente" class="form-label label-user">Nombre del Cliente:</label>
+                                <input type="text" class="form-control" id="txtNombreCliente" name="txtNombreCliente" value=""
+                                    required>
+                                    <div class="invalid-feedback">
+                                        Usario encargado de realizar el pedido.
+                                    </div>
+                            </div>
+                            <div class="col-6">
+                                <label for="txtFechaEnvioPedido" class="form-label label-user">Fecha de entrega del pedido:</label>
+                                <input type="date" class="form-control" id="txtFechaEnvioPedido"
+                                    name="txtFechaEnvioPedido" value="" required>
+                            </div>
+                        </div>
+                        <div class="row mx-1 mb-3">
+                            <div class="col-6">
+                                <label for="txtFechaEnvioPedido" class="form-label label-user">Tematica:</label>
+                                <input type="date" class="form-control" id="txtFechaEnvioPedido"
+                                    name="txtFechaEnvioPedido" value="" required>
+                            </div>
+                            <div class="col-6">
+                                <label for="cbCategoria" class="form-label label-user">Categoria:</label>
+                                <select class="form-select" id="cbCategoria" name="cbCategoria" required value="">
+                                    <option selected disabled value="">Seleccione...</option>
+                                    {% for categoria in categoriasProducto %}
+                                        <option value="{{categoria.id}}">{{categoria.catNombre}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mx-1 mb-3">
+                            <div class="col-6">
+                                <label for="cbCategoria" class="form-label label-user">Sabor:</label>
+                                <select class="form-select" id="cbCategoria" name="cbCategoria" required value="">
+                                    <option selected disabled value="">Seleccione...</option>
+                                    {% for categoria in categoriasProducto %}
+                                        <option value="{{categoria.id}}">{{categoria.catNombre}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-6">
+                                <label for="cbCategoria" class="form-label label-user">Cantidad:</label>
+                                <select class="form-select" id="cbCategoria" name="cbCategoria" required value="">
+                                    <option selected disabled value="">Seleccione...</option>
+                                    {% for categoria in categoriasProducto %}
+                                        <option value="{{categoria.id}}">{{categoria.catNombre}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mx-1 mb-3">
+                            <div class="col-6">
+                                <label for="cbMetodoPago" class="form-label label-user">Metodo de pago:</label>
+                                <select class="form-select" id="cbMetodoPago" name="cbMetodoPago" required value="">
+                                    <option selected disabled value="">Seleccione...</option>
+                                    {% for metodo in pedidosPago %}
+                                        <option value="{{pedidos.id}}">{{pedidos.metodoPago}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label for="exampleFormControlTextarea1">Descripción del producto:</label>
+                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" 
+                                    placeholder="En este espacio van los detalles del pedido, un ejemplo: 
+                                    Nombre: Pedro, Edad: 20, Mensaje: Feliz cumpleaños pedrito"
+                                    required value=""></textarea>
+                                  </div>
+                            </div>
+                        </div>
+                        <div class="row mx-1 mb-3">
+                            <div class="col-6">
+                                <div class="container-input">
+                                    <input type="file" id="fileFoto" name="fileFoto" accept=".jpg"
+                                        class="inputfile inputfile-1"
+                                        data-multiple-caption="{count} archivos seleccionados" multiple />
+                                    <label for="fileFoto">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="iborrainputfile" width="20"
+                                            height="17" viewBox="0 0 20 17">
+                                            <path
+                                                d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z">
+                                            </path>
+                                        </svg>
+                                        <span class="iborrainputfile">Subir imagen</span>
+                                    </label>
+                                </div>
+                                <div class="text-center mt-3">
+                                    <img class="rounded" id="imagenProducto" src="" alt="">
+                                </div>
+                            </div>
+                            <div class="col-6 d-flex align-items-end justify-content-end">
+                                <div class="btn-group" role="group">
+                                    <button class="btn btn-secondary fw-bold" type="submit">AGREGAR</button>
+                                    <button class="btn btn-danger fw-bold" type="button">
+                                        <a href="/listarProductos/" class="text-dark">CANCELAR</a>
+                                    </button>
+                            </div>
+                            </div>
+                        </div>
+                    </form>
+                    <div>
+                        {% if mensaje %}
+                        {% if estado %}
+                        <script>
+                            Swal.fire("Registro Usuario", '{{mensaje}}', "success")
+                        </script>
+                        {% else %}
+                        <script>
+                            Swal.fire("Registro Usuario", '{{mensaje}}', "warning")
+                        </script>
+                        {% endif %}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block footer %}
+{% include "cliente/footer.html" %}
+{% endblock %}

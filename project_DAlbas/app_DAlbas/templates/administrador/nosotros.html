@@ -1,0 +1,139 @@
+{% extends "index.html" %}
+{% block encabezado %}
+{% include "administrador/encabezado.html" %}
+{% endblock %}
+{% block contenido %}
+{% load static %}
+<section class="nosotros" id="nosotros">
+    <h1 class="heading"> ¿Qué es <span>D' Albas</span>? </h1>
+
+    <div class="box-container">
+
+        <div class="box">
+            <img src="{%static '../static/images/icon.png' %}" style="border-radius: 20%;">
+            <h3>Misión</h3>
+            <p>Llenar de felicidad cada fecha importante de nuestros clientes</p>
+        </div>
+
+        <div class="box">
+            <img src="{%static '../static/images/icon.png' %}" style="border-radius: 20%;">
+            <h3>Visión</h3>
+            <p>crecer profesionalmente a tal punto de tener varios puntos ubicados en el país</p>
+        </div>
+
+        <div class="box">
+            <img src="{%static '../static/images/icon.png' %}" alt="" style="border-radius: 20%;">
+            <h3>Nosotros</h3>
+            <p>Iniciamos en el 2014 con la idea de
+                hacer tortas para las reuniones familiares, así
+                poco a poco crecimos haciendo no solo horneando para nosotros,
+                tambien para amigos y conocidos</p>
+        </div>
+    </div>
+</section>
+
+
+<section class="nosotros" id="nosotros">
+    <h1 class="heading">Nuestros<span>empleados</span></h1>
+
+    <div class="box-container">
+        <div class="box">
+            <div class="imagen col-md-4 rounded mx-auto d-block">
+                <img class="grande" src="{%static '../static/images/boss.png' %}" alt="">
+            </div>
+            <h3>Alba Denis Morea</h3>
+            <p>Soy una mujer que le gusta hacer feliz a las personas.
+                Mi especialidad es preparar y hornear productos.</p>
+            <p class="card-text"><small class="text-body-secondary">Propietaria.</small></p>
+        </div>
+
+        <div class="box">
+            <div class="imagen col-md-4 rounded mx-auto d-block">
+                <img class="grande" src="{%static '../static/images/empleado.jpg' %}" alt="">
+            </div>
+            <h3>Ximena Rodriguez Morea</h3>
+            <p>Soy una persona muy creativa.
+                Mi especilidad es el diseño de nuestros pedidos.</p>
+            <p class="card-text"><small class="text-body-secondary">Diseñadora.</small></p>
+        </div>
+
+    </div>
+</section>
+
+<section class="nosotros" id="nosotros">
+    <h1 class="heading"><span>Calificación</span></h1>
+    <div class="contenedores">
+        <div class="cards card mb-3 mx-3" style="max-width: 450px;">
+            <div class="row g-0">
+                <div class="card-body">
+                    <div class="stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <h5 class="card-title">"Super deliciosas y Hermosos diseños personalizados👍🏻👍🏻👍🏻."</h5>
+                    <p class="card-text">-Morea Yesenia</p>
+                    <p class="card-text"><small class="text-body-secondary">Pasteles caseros·Pasteles
+                            personalizados·Cupcakes deliciosos.</small></p>
+                </div>
+            </div>
+        </div>
+        <div class="cards card mb-3 mx-3" style="max-width: 450px;">
+            <div class="row g-0">
+                <div class="card-body">
+                    <div class="stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <h5 class="card-title">"Muy profesionales y ricos sus productos."</h5>
+                    <p class="card-text">-Maria Eugenia Piedrahita Grisales</p>
+                    <p class="card-text"><small class="text-body-secondary">Excelente selección·Personal
+                            expertos.</small></p>
+                </div>
+            </div>
+        </div>
+        <div class="cards card mb-3 mx-3" style="max-width: 450px;">
+            <div class="row g-0">
+                <div class="card-body">
+                    <div class="stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <h5 class="card-title">"Deli y la decoración muy bien hecha, súper recomendados."</h5>
+                    <p class="card-text">-Ana María Alvira Martínez</p>
+                    <p class="card-text"><small class="text-body-secondary">Excelente selección·Personal
+                            expertos.</small></p>
+                </div>
+            </div>
+        </div>
+        <div class="cards card mb-3 mx-3" style="max-width: 450px;">
+            <div class="row g-0">
+                <div class="card-body">
+                    <div class="stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <h5 class="card-title">"Creatividad y puntualidad, recomendados."</h5>
+                    <p class="card-text">-Patricia Castro</p>
+                    <p class="card-text"><small class="text-body-secondary">Pasteles personalizados.</small></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block footer %}
+{% include "administrador/footer.html" %}
+{% endblock %}

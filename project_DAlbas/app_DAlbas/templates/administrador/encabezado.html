@@ -1,0 +1,76 @@
+{% load static %}
+<a href="/inicioAdministrador/" class="logo">
+  <img src="{%static '../static/images/Logo.svg' %}" alt="" style="width: 70%; padding: 8%"/>
+</a>
+
+<nav class="navbar" id="menu" style="display: flex; justify-content: center; align-self: center; margin-right: 15rem;">
+  <a href="/inicioAdministrador/">Inicio</a>
+  <a href="/listarProductos/">Productos</a>
+  <a href="/vistaListaPedidosAdministrador/">Pedidos</a>
+  <a href="/vistaListaUsuarios/">Usuarios</a>
+</nav>
+
+<div class="row">
+  <div class="col my-auto">
+    <h4>
+      {{user.first_name}}
+    </h4>
+  </div>
+  <div class="col" id="cart-btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" style="height: 9em; width: 9em;">
+    <img src="/media/{{ user.fotoUsuario }}" alt="Foto del administrador" class="mx-auto mt-3" style="width: 90%; border-radius: 50%;">
+  </div>
+</div>
+
+
+<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+  <div class="offcanvas-header">
+    <h2 class="offcanvas-title mx-auto my-5 " id="offcanvasRightLabel" style="font-family: 'Poppins', sans-serif;">Menú del Administrador</h2>
+    <img src="/media/{{ user.fotoUsuario }}" class="ml-2 mr-3" alt="" style="width: 15%; border-radius: 50%;">
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close" style="margin-top: -75px;"></button>
+  </div>
+  <hr>
+  <h3 class="m-5 text-center">Bienvenido {{user.first_name}} {{user.last_name}}</h3>
+  <hr>
+  <div class="offcanvas-body">
+    <div class="container">
+      <ul class="navbar-nav justify-content-center">
+        <li class="nav-item mx-auto mb-2">
+          <a class="nav-link" href="/inicioAdministrador/" style="font-size: 15px; font-family: 'Poppins', sans-serif;">Inicio</a>
+        </li>
+        <hr>
+        <li class="nav-item mx-auto my-3">
+          <a class="nav-link" href="/vistaPerfilAdministrador/" style="font-size: 15px; font-family: 'Poppins', sans-serif;">Mi perfil</a>
+        </li>
+        <hr>
+        <li class="nav-item mx-auto my-3">
+          <div class="dropdown">
+            <a onclick="toggleDropdown2()" class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="font-size: 15px; font-family: 'Poppins', sans-serif;">
+              Registrar persona
+            </a>
+            <ul id="dropdown-content2" class="dropdown-menu" aria-labelledby="dropdownMenuButton2" style="font-size: 15px; font-family: 'Poppins', sans-serif;">
+              <li><a class="dropdown-item" href="/vistaRegistrarAdministrador/">Administrador</a></li>
+              <li><a class="dropdown-item" href="/vistaRegistrarUsuario/">Cliente</a></li>
+            </ul>
+          </div>
+        </li>
+        
+        <hr>
+        <li class="nav-item mx-auto my-3">
+          <a class="nav-link" href="/vistaRegistrarProducto/" style="font-size: 15px; font-family: 'Poppins', sans-serif;">Registrar producto</a>
+        </li>
+        <hr>
+        <li class="nav-item mx-auto my-3">
+          <a class="nav-link" href="/vistaRegistrarPedidoAdmin/" style="font-size: 15px; font-family: 'Poppins', sans-serif;">Realizar pedido</a>
+        </li>
+        <hr>
+        <li class="nav-item mx-auto mt-3">
+          <a class="nav-link" href="/cerrarSesion/" style="font-size: 15px; font-family: 'Poppins', sans-serif;">Cerrar sesión</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <hr>
+  <div class="container text-center pt-3">
+    <p>Último inicio de sesión: <span>{{ user.last_login }}</span></p>
+  </div>
+</div>

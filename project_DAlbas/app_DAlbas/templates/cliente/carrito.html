@@ -1,0 +1,116 @@
+{% extends "index.html" %}
+{% block encabezado %}
+{% include "cliente/encabezado.html" %}
+{% endblock %}
+{% block contenido %}
+{% load static %}
+<div class="container mb-5">
+  <h1 class="heading" name="pastillaje">Carrito de <span> compras</span></h1>
+  <div class="mt-3">
+    <div id="vistaTablaPedidos" class="w-100 table-responsive card container" style="margin: 0 auto">
+      <table class="table table-bordered table-stripped mt-3" id="tblProductosPedidos">
+          <thead >
+              <tr>
+                  <th colspan="7" class="text-center">PRODUCTOS</th>
+              </tr>
+              <tr class="text-dark">
+                  <th class="text-center">Producto</th>
+                  <th class="text-center">Precio Unitario</th>
+                  <th class="text-center">Precio Acumulado</th>
+                  <th class="text-center">Cantidad</th>
+                  <th class="text-center">Acción</th>
+              </tr>
+          </thead>
+          <tbody id="datosTablaPedido">
+            {% if request.session.carrito.items %}
+            {% for key, value in request.session.carrito.items %}
+              <tr class="py-4">
+                <td>{{value.nombre}}</td>
+                <td class="text-center">$ {{value.precio_unitario}}</td>
+                <td class="text-center">$ {{value.acumulado}}</td>
+                <td class="text-center">{{value.cantidad}}</td>
+                <td class="text-center">
+                  <span>
+                    <a href="{% url 'Aum' value.producto_id %}" class="btn btn-dark badge-dark fw-bold">+</a>
+                    <a href="{% url 'Sub' value.producto_id %}" class="btn btn-dark badge-dark fw-bold">-</a>
+                  </span>
+                  <a href="{% url 'Del' value.producto_id %}" class="btn btn-danger badge-dark" >
+                    <i class="fa fa-trash"></i>
+                  </a>
+                </td>
+              </tr>
+            {% endfor %}
+            {% else %}
+              <tr>
+                <td colspan="5">
+                    <div class="alert alert-danger text-center"> Sin Productos </div>
+                </td>
+              </tr>
+            {% endif %}
+          </tbody>
+      </table>
+      <br>
+      <p class="mt-3 h3 mx-2">Total: $ {{total_carrito}}</p>
+      <br>
+  </div>
+  </div>
+  <br>
+  <br>
+  <a href="{% url 'CLS' %}" class="btn btn-danger text-white" style="font-size: 17px;">Limpiar Carrito</a>
+  <!-- <a href="#" class="btn btn-primary text-white mx-2" style="font-size: 17px;">Realizar Pedido</a> -->
+  <button type="button" class="btn btn-primary text-white mx-2" style="font-size: 17px;" data-bs-toggle="modal" data-bs-target="#modalPedido" data-bs-whatever="@getbootstrap">Realizar Pedido</button>
+  <br><br><br>
+</div>
+
+<div class="modal fade" id="modalPedido" tabindex="-1" aria-labelledby="modalPedidoLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="modalPedidoLabel">REGISTRAR PEDIDO</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group row m-4">
+            <div class="mb-3 col-lg-6">
+                <label for="txtFechaHoraPedido" class="form-label mx-1">Fecha del pedido:</label>
+                <input type="datetime-local" name="txtFechaHoraPedido" id="txtFechaHoraPedido" class="form-control" min="{{ today|date:'Y-m-d' }}T00:00" step="3600" required>
+            </div>                
+            <div class="mb-3 col-lg-6">                                    
+                <label for="cbMetodoPago" class="form-label mx-1">Método de pago:</label>
+                <select name="cbMetodoPago" id="cbMetodoPago" class="form-select" required>
+                    <option value="">Seleccione...</option>
+                    {% for metodo in METODOS_DE_PAGO %}
+                        <option value="{{metodo.0}}">{{metodo.0}}</option>
+                    {% endfor %}
+                </select>           
+            </div>  
+            <div class="mb-3 col-lg-6">                                    
+                <label for="cbMetodoPago" class="form-label mx-1">Tus productos:</label>
+                <select name="cbMetodoPago" id="cbMetodoPago" class="form-select" required>
+                    <option value="">Seleccione...</option>
+                    {% if request.session.carrito.items %}
+                      {% for key, value in request.session.carrito.items %}
+                        <option value="{{metodo.0}}">{{value.nombre}} - {{value.precio_unitario}}</option>
+                      {% endfor %}
+                    {% endif %}
+                </select>           
+            </div>  
+            <div class="mb-3 col-lg-6">
+              <label for="txtCantidadProducto" class="form-label mx-1">Confirma la cantidad:</label>
+              <input type="number" name="txtCantidadProducto" id="txtCantidadProducto" class="form-control" min="{{ today|date:'Y-m-d' }}T00:00" step="3600" required>
+          </div> 
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Send message</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+{% block footer %}
+{% include "cliente/footer.html" %}
+{% endblock %}
